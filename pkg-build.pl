@@ -18,6 +18,7 @@ my $GLOBAL_PATH_TO_SCRIPT_FILE;
 my $GLOBAL_PATH_TO_SCRIPT_DIR;
 my $GLOBAL_PATH_TO_TOP;
 my $CWD;
+my $PKG_CREATION_DATE = `date -R`;
 
 my %CFG = ();
 
@@ -592,6 +593,7 @@ sub Build()
                   $line =~ s/[@][@]PKG_OS_TAG[@][@]/$CFG{PKG_OS_TAG}/g;
                   $line =~ s/[@][@]PKG_VERSION[@][@]/$CFG{PKG_VERSION}/g;
                   $line =~ s/[@][@]PKG_SUMMARY[@][@]/$CFG{PKG_SUMMARY}/g;
+                  $line =~ s/[@][@]PKG_CREATION_DATE[@][@]/$PKG_CREATION_DATE/g;
                   $line =~ s/[@][@]PKG_DEPENDS[@][@]/@{[_SanitizePkgList($CFG{PKG_DEPENDS})]}/g;
                   $line =~ s/[@][@]PKG_PRE_DEPENDS[@][@]/@{[_SanitizePkgList($CFG{PKG_PRE_DEPENDS})]}/g;
                   $line =~ s/[@][@]PKG_PROVIDES[@][@]/@{[_SanitizePkgList($CFG{PKG_PROVIDES})]}/g;
