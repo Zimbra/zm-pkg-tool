@@ -451,6 +451,11 @@ sub Init()
    print "=========================================================================================================\n";
    LoadConfiguration($_) foreach (@cmd_args);
    print "=========================================================================================================\n";
+
+   # Normalize PKG_RELEASE based on packaging format
+   if ($CFG{PKG_FORMAT} eq "rpm") {
+	   $CFG{PKG_RELEASE} =~ s/[~-]/_/g;   # replace ~ and - with _
+   }
 }
 
 
@@ -478,6 +483,11 @@ sub _SanitizePkgList($)
             my $pkn = $1;
             my $cmp = $2;
             my $ver = $3;
+
+	    # Normalize version for RPM
+	    if ( $CFG{PKG_FORMAT} eq "rpm" ) {
+		    $ver =~ s/[~-]/_/g if defined $ver;
+	    }
 
             $pkn =~ s/[(]$//;
             $ver =~ s/[)]$//;
